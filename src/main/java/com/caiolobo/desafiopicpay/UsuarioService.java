@@ -1,5 +1,6 @@
 package com.caiolobo.desafiopicpay;
 
+import com.caiolobo.desafiopicpay.exceptions.UsuarioJaExisteException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,8 +14,11 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario criaUsuario(Usuario novoUsuario){
-        return usuarioRepository.save(novoUsuario);
+    public Usuario criaUsuario(CreateUsuarioDTO novoUsuario){
+        if(usuarioRepository.existeUsuario(novoUsuario.email())){
+            throw new UsuarioJaExisteException();
+        }
+        return usuarioRepository.save(new Usuario(novoUsuario));
     }
 
     /*public void enviarDinheiro(BigDecimal quantidade, String emailRecebedor){
