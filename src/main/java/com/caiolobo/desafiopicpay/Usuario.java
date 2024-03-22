@@ -18,6 +18,13 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(CreateUsuarioDTO novoUsuario) {
+        this.nome = novoUsuario.nome();
+        this.email = novoUsuario.email();
+        this.senha = novoUsuario.senha();
+        this.saldo = new BigDecimal("0.00");
+    }
+
     public Long getId() {
         return id;
     }
