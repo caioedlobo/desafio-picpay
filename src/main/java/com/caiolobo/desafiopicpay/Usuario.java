@@ -20,6 +20,7 @@ public class Usuario {
 
     public Usuario(CreateUsuarioDTO novoUsuario) {
         this.nome = novoUsuario.nome();
+        this.documento = novoUsuario.documento();
         this.email = novoUsuario.email();
         this.senha = novoUsuario.senha();
         this.saldo = new BigDecimal("0.00");
