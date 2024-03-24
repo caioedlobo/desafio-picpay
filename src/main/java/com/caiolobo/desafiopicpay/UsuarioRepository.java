@@ -12,10 +12,5 @@ import java.math.BigDecimal;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query("select count(u) > 0 from Usuario u where u.email = :email")
-    boolean existeUsuario(String email);
-
-    @Transactional
-    @Modifying
-    @Query("update Usuario u set u.saldo = :novoSaldo where u.email = :email")
-    void atualizaDinheiro(BigDecimal novoSaldo, String email);
+    boolean userExists(String email);
 }
