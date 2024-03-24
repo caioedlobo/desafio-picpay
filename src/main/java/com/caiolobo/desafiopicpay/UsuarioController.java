@@ -1,5 +1,6 @@
 package com.caiolobo.desafiopicpay;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody CreateUsuarioDTO novoUsuario){
+    public ResponseEntity<Usuario> criarUsuario(@Valid @RequestBody CreateUsuarioDTO novoUsuario){
         return ResponseEntity.ok(usuarioService.criaUsuario(novoUsuario));
     }
 }
