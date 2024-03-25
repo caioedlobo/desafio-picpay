@@ -14,6 +14,7 @@ public class Usuario {
     private String email;
     private String senha;
     private BigDecimal saldo;
+    private int type;
 
     public Usuario() {
     }
@@ -72,6 +73,14 @@ public class Usuario {
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     @Override
