@@ -1,4 +1,4 @@
-package com.caiolobo.desafiopicpay.Transaction;
+package com.caiolobo.desafiopicpay.transaction;
 
 
 import jakarta.persistence.*;
