@@ -1,4 +1,4 @@
-package com.caiolobo.desafiopicpay.Transaction;
+package com.caiolobo.desafiopicpay.transaction;
 
 import com.caiolobo.desafiopicpay.AccountType;
 import com.caiolobo.desafiopicpay.Usuario;

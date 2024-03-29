@@ -1,4 +1,4 @@
-package com.caiolobo.desafiopicpay.Transaction;
+package com.caiolobo.desafiopicpay.transaction;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
