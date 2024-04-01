@@ -1,6 +1,7 @@
 package com.caiolobo.desafiopicpay;
 
 import com.caiolobo.desafiopicpay.exceptions.AccountNotFoundException;
+import com.caiolobo.desafiopicpay.exceptions.AuthorizationException;
 import com.caiolobo.desafiopicpay.exceptions.UsuarioJaExisteException;
 import com.caiolobo.desafiopicpay.exceptions.ValidateException;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ public class ApplicationControllerAdvice {
     public ApiErrors handleNotFoundException(Exception exception){
         return new ApiErrors(exception.getMessage());
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrors handleMethodNotValidException(MethodArgumentNotValidException ex ){
@@ -27,6 +29,12 @@ public class ApplicationControllerAdvice {
                 .map(error -> error.getDefaultMessage())
                 .collect(Collectors.toList());
         return new ApiErrors(errors);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiErrors handleAuthorizationException(AuthorizationException exception ){
+        return new ApiErrors(exception.getMessage());
     }
 
 }
