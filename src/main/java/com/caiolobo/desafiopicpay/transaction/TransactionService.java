@@ -5,6 +5,7 @@ import com.caiolobo.desafiopicpay.Usuario;
 import com.caiolobo.desafiopicpay.UsuarioService;
 import com.caiolobo.desafiopicpay.authorization.AuthorizationService;
 import com.caiolobo.desafiopicpay.exceptions.ValidateException;
+import com.caiolobo.desafiopicpay.notification.NotificationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +18,13 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final UsuarioService usuarioService;
     private final AuthorizationService authorizationService;
+    private final NotificationService notificationService;
 
-    public TransactionService(TransactionRepository transactionRepository, UsuarioService usuarioService, AuthorizationService authorizationService) {
+    public TransactionService(TransactionRepository transactionRepository, UsuarioService usuarioService, AuthorizationService authorizationService, NotificationService notificationService) {
         this.transactionRepository = transactionRepository;
         this.usuarioService = usuarioService;
         this.authorizationService = authorizationService;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -32,6 +35,7 @@ public class TransactionService {
         usuarioService.deposit(transaction.getPayee(), transaction.getValue());
 
         authorizationService.authorize(transaction);
+        notificationService.notify(transaction);
 
     }
 
