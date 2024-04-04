@@ -24,6 +24,9 @@ public class Transaction {
     @CreatedDate
     private LocalDateTime createdAt;
 
+    public Transaction() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Transaction(Long payer, Long payee, BigDecimal value) {
         this.payer = payer;
