@@ -1,4 +1,4 @@
-package com.caiolobo.desafiopicpay;
+package com.caiolobo.desafiopicpay.exceptions;
 
 import com.caiolobo.desafiopicpay.exceptions.*;
 import org.springframework.http.HttpStatus;
@@ -28,16 +28,21 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(errors);
     }
 
-    @ExceptionHandler(AuthorizationException.class)
+    /*@ExceptionHandler(AuthorizationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiErrors handleAuthorizationException(AuthorizationException exception ){
         return new ApiErrors(exception.getMessage());
-    }
+    }*/
 
     @ExceptionHandler(GenericException.class)
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public ApiErrors handleGenericException(GenericException exception ){
         return new ApiErrors(exception.getMessage());
     }
+
+    /*@ExceptionHandler(Exception.class)
+    public ApiErrors handleKafkaException(KafkaException exception ){
+        return new ApiErrors(exception.getMessage());
+    }*/
 
 }

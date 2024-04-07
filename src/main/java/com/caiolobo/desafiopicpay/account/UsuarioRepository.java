@@ -1,5 +1,6 @@
-package com.caiolobo.desafiopicpay;
+package com.caiolobo.desafiopicpay.account;
 
+import com.caiolobo.desafiopicpay.account.Usuario;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

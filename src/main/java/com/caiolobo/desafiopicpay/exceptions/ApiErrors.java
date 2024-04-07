@@ -1,4 +1,4 @@
-package com.caiolobo.desafiopicpay;
+package com.caiolobo.desafiopicpay.exceptions;
 
 import java.util.Collections;
 import java.util.List;

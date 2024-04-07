@@ -1,5 +1,6 @@
-package com.caiolobo.desafiopicpay;
+package com.caiolobo.desafiopicpay.account;
 
+import com.caiolobo.desafiopicpay.account.CreateUsuarioDTO;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 

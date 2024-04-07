@@ -1,4 +1,4 @@
-package com.caiolobo.desafiopicpay;
+package com.caiolobo.desafiopicpay.account;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

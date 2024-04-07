@@ -1,4 +1,4 @@
-package com.caiolobo.desafiopicpay;
+package com.caiolobo.desafiopicpay.account;
 
 public enum AccountType {
     PF(0), PJ(1);

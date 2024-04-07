@@ -1,5 +1,8 @@
-package com.caiolobo.desafiopicpay;
+package com.caiolobo.desafiopicpay.account;
 
+import com.caiolobo.desafiopicpay.account.CreateUsuarioDTO;
+import com.caiolobo.desafiopicpay.account.Usuario;
+import com.caiolobo.desafiopicpay.account.UsuarioRepository;
 import com.caiolobo.desafiopicpay.exceptions.AccountNotFoundException;
 import com.caiolobo.desafiopicpay.exceptions.UsuarioJaExisteException;
 import org.springframework.stereotype.Service;
