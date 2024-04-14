@@ -1,9 +1,10 @@
 package com.caiolobo.desafiopicpay.transaction;
 
-import com.caiolobo.desafiopicpay.AccountType;
-import com.caiolobo.desafiopicpay.Usuario;
-import com.caiolobo.desafiopicpay.UsuarioService;
+import com.caiolobo.desafiopicpay.account.AccountType;
+import com.caiolobo.desafiopicpay.account.Account;
+import com.caiolobo.desafiopicpay.account.AccountService;
 import com.caiolobo.desafiopicpay.authorization.AuthorizationService;
+import com.caiolobo.desafiopicpay.exceptions.InsufficientFundsException;
 import com.caiolobo.desafiopicpay.exceptions.ValidateException;
 import com.caiolobo.desafiopicpay.notification.NotificationService;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,13 @@ import org.slf4j.LoggerFactory;
 public class TransactionService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionService.class);
     private final TransactionRepository transactionRepository;
-    private final UsuarioService usuarioService;
+    private final AccountService accountService;
     private final AuthorizationService authorizationService;
     private final NotificationService notificationService;
 
-    public TransactionService(TransactionRepository transactionRepository, UsuarioService usuarioService, AuthorizationService authorizationService, NotificationService notificationService) {
+    public TransactionService(TransactionRepository transactionRepository, AccountService accountService, AuthorizationService authorizationService, NotificationService notificationService) {
         this.transactionRepository = transactionRepository;
-        this.usuarioService = usuarioService;
+        this.accountService = accountService;
         this.authorizationService = authorizationService;
         this.notificationService = notificationService;
     }
@@ -31,8 +32,8 @@ public class TransactionService {
     public void transfer(Transaction transaction){
         validate(transaction);
         transactionRepository.save(transaction);
-        usuarioService.withdraw(transaction.getPayer(), transaction.getValue());
-        usuarioService.deposit(transaction.getPayee(), transaction.getValue());
+        accountService.withdraw(transaction.getPayer(), transaction.getValue());
+        accountService.deposit(transaction.getPayee(), transaction.getValue());
 
         authorizationService.authorize(transaction);
         notificationService.notify(transaction);
@@ -41,13 +42,13 @@ public class TransactionService {
 
     private void validate(Transaction transaction){
         LOGGER.info("Validating transaction {}", transaction);
-        Usuario payeer = usuarioService.searchAccount(transaction.getPayer());
-        usuarioService.searchAccount(transaction.getPayee());
+        Account payeer = accountService.searchAccount(transaction.getPayer());
+        accountService.searchAccount(transaction.getPayee());
         if(payeer.getType() == AccountType.PJ.getValue()){
             throw new ValidateException("Conta é PJ");
         }
         if(payeer.getSaldo().compareTo(transaction.getValue()) < 0){
-            throw new ValidateException("Saldo insuficiente para realizar transferência");
+            throw new InsufficientFundsException();
         }
 
 
