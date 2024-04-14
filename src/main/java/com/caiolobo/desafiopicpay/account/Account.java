@@ -1,12 +1,11 @@
 package com.caiolobo.desafiopicpay.account;
 
-import com.caiolobo.desafiopicpay.account.CreateUsuarioDTO;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Table(name = "usuarios")
 @Entity
-public class Usuario {
+public class Account {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -17,10 +16,10 @@ public class Usuario {
     private BigDecimal saldo;
     private int type;
 
-    public Usuario() {
+    public Account() {
     }
 
-    public Usuario(CreateUsuarioDTO novoUsuario) {
+    public Account(CreateUsuarioDTO novoUsuario) {
         this.nome = novoUsuario.nome();
         this.documento = novoUsuario.documento();
         this.email = novoUsuario.email();
