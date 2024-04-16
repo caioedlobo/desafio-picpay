@@ -28,16 +28,5 @@ public class AccountService {
         return accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
     }
 
-    public void withdraw(Long user, BigDecimal value){
-        Account account = searchAccount(user);
-        if(account.getSaldo().compareTo(value) < 0 ){
-            throw new InsufficientFundsException();
-        }
-        accountRepository.withdraw(user, value);
-    }
 
-    public void deposit(Long user, BigDecimal value){
-        searchAccount(user);
-        accountRepository.deposit(user, value);
-        }
 }

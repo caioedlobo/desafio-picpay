@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
+
 @Service
 public class TransactionService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionService.class);
@@ -32,12 +34,25 @@ public class TransactionService {
     public void transfer(Transaction transaction){
         validate(transaction);
         transactionRepository.save(transaction);
-        accountService.withdraw(transaction.getPayer(), transaction.getValue());
-        accountService.deposit(transaction.getPayee(), transaction.getValue());
+        withdraw(transaction.getPayer(), transaction.getValue());
+        deposit(transaction.getPayee(), transaction.getValue());
 
         authorizationService.authorize(transaction);
         notificationService.notify(transaction);
 
+    }
+
+    public void withdraw(Long user, BigDecimal value){
+        Account account = accountService.searchAccount(user);
+        if(account.getSaldo().compareTo(value) < 0 ){
+            throw new InsufficientFundsException();
+        }
+        transactionRepository.withdraw(user, value);
+    }
+
+    public void deposit(Long user, BigDecimal value){
+        accountService.searchAccount(user);
+        transactionRepository.deposit(user, value);
     }
 
     private void validate(Transaction transaction){
@@ -50,7 +65,6 @@ public class TransactionService {
         if(payeer.getSaldo().compareTo(transaction.getValue()) < 0){
             throw new InsufficientFundsException();
         }
-
 
     }
 }
