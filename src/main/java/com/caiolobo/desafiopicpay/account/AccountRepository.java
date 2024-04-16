@@ -14,13 +14,4 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query("select count(u) > 0 from Usuario u where u.email = :email")
     boolean userExists(String email);
 
-    @Transactional
-    @Modifying
-    @Query("update Usuario u set u.saldo = u.saldo - :value where u.id = :payer")
-    void withdraw(Long payer, BigDecimal value);
-
-    @Transactional
-    @Modifying
-    @Query("update Usuario u set u.saldo = u.saldo + :value where u.id = :payee")
-    void deposit(Long payee, BigDecimal value);
 }
