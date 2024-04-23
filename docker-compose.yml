@@ -18,3 +18,13 @@ services:
     image: 'mock-api'
     ports:
       - '8081:8080'
+
+  postgres:
+    image: 'postgres'
+    restart: always
+    environment:
+      POSTGRES_DB: picpaydb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
