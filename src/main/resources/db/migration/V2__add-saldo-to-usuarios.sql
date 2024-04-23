@@ -1,2 +1,0 @@
-ALTER TABLE usuarios
-ADD COLUMN saldo DECIMAL(10, 2);
