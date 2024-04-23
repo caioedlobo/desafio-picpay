@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS accounts(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    document VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    balance DECIMAL(10, 2),
+    type INT
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id SERIAL PRIMARY KEY,
+    payer BIGINT NOT NULL,
+    payee BIGINT NOT NULL,
+    value NUMERIC(19, 2) NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
