@@ -35,7 +35,7 @@ class TransactionServiceTest {
         BDDMockito.given(accountService.searchAccount(id)).willReturn(account);
         BDDMockito.given(account.getBalance()).willReturn(value);
 
-        //WHEN + ASSERT
+        //WHEN + THEN
         assertThrows(InsufficientFundsException.class, () -> transactionService.withdraw(id, BigDecimal.valueOf(10)));
 
     }
@@ -55,6 +55,23 @@ class TransactionServiceTest {
         //THEN
         BDDMockito.verify(accountService).searchAccount(id);
         BDDMockito.verify(transactionRepository).withdraw(id, value);
+
+    }
+
+    @Test
+    void itShouldDeposit() {
+        //GIVEN
+        BigDecimal value = new BigDecimal(20);
+        Long id = 1L;
+
+        BDDMockito.given(accountService.searchAccount(id)).willReturn(account);
+
+        //WHEN
+        transactionService.deposit(id, value);
+
+        //THEN
+        BDDMockito.verify(accountService).searchAccount(id);
+        BDDMockito.verify(transactionRepository).deposit(id, value);
 
     }
 
