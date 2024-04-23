@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/api/accounts")
 public class AccountController {
 
     private final AccountService accountService;
@@ -15,7 +15,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<Account> criarUsuario(@Valid @RequestBody CreateUsuarioDTO novoUsuario){
-        return ResponseEntity.ok(accountService.criaUsuario(novoUsuario));
+    public ResponseEntity<Account> create(@Valid @RequestBody CreateAccountDTO newAccount){
+        return ResponseEntity.ok(accountService.createAccount(newAccount));
     }
 }

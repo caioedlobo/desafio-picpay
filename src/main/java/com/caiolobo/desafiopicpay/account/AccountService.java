@@ -1,12 +1,8 @@
 package com.caiolobo.desafiopicpay.account;
 
 import com.caiolobo.desafiopicpay.exceptions.AccountNotFoundException;
-import com.caiolobo.desafiopicpay.exceptions.InsufficientFundsException;
 import com.caiolobo.desafiopicpay.exceptions.UsuarioJaExisteException;
-import com.caiolobo.desafiopicpay.exceptions.ValidateException;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 @Service
 public class AccountService {
@@ -17,11 +13,11 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account criaUsuario(CreateUsuarioDTO novoUsuario){
-        if(accountRepository.userExists(novoUsuario.email())){
+    public Account createAccount(CreateAccountDTO newAccount){
+        if(accountRepository.userExists(newAccount.email())){
             throw new UsuarioJaExisteException();
         }
-        return accountRepository.save(new Account(novoUsuario));
+        return accountRepository.save(new Account(newAccount));
     }
 
     public Account searchAccount(Long accountId) {

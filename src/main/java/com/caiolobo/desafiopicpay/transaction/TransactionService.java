@@ -44,7 +44,7 @@ public class TransactionService {
 
     public void withdraw(Long user, BigDecimal value){
         Account account = accountService.searchAccount(user);
-        if(account.getSaldo().compareTo(value) < 0 ){
+        if(account.getBalance().compareTo(value) < 0 ){
             throw new InsufficientFundsException();
         }
         transactionRepository.withdraw(user, value);
@@ -62,7 +62,7 @@ public class TransactionService {
         if(payeer.getType() == AccountType.PJ.getValue()){
             throw new ValidateException("Conta é PJ");
         }
-        if(payeer.getSaldo().compareTo(transaction.getValue()) < 0){
+        if(payeer.getBalance().compareTo(transaction.getValue()) < 0){
             throw new InsufficientFundsException();
         }
 

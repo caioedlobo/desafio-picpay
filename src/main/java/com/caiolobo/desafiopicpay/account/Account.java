@@ -3,28 +3,28 @@ package com.caiolobo.desafiopicpay.account;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
-@Table(name = "usuarios")
+@Table(name = "accounts")
 @Entity
 public class Account {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private String nome;
-    private String documento;
+    private String name;
+    private String document;
     private String email;
-    private String senha;
-    private BigDecimal saldo;
+    private String password;
+    private BigDecimal balance;
     private int type;
 
     public Account() {
     }
 
-    public Account(CreateUsuarioDTO novoUsuario) {
-        this.nome = novoUsuario.nome();
-        this.documento = novoUsuario.documento();
-        this.email = novoUsuario.email();
-        this.senha = novoUsuario.senha();
-        this.saldo = new BigDecimal("0.00");
+    public Account(CreateAccountDTO newAccount) {
+        this.name = newAccount.name();
+        this.document = newAccount.document();
+        this.email = newAccount.email();
+        this.password = newAccount.password();
+        this.balance = new BigDecimal("0.00");
     }
 
     public Long getId() {
@@ -35,20 +35,20 @@ public class Account {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDocumento() {
-        return documento;
+    public String getDocument() {
+        return document;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     public String getEmail() {
@@ -59,20 +59,20 @@ public class Account {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public BigDecimal getSaldo() {
-        return saldo;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public int getType() {
@@ -85,13 +85,14 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "Account{" +
                 "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", documento='" + documento + '\'' +
+                ", name='" + name + '\'' +
+                ", document='" + document + '\'' +
                 ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", saldo=" + saldo +
+                ", password='" + password + '\'' +
+                ", balance=" + balance +
+                ", type=" + type +
                 '}';
     }
 }

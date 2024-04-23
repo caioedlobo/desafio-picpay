@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    @Query("select count(u) > 0 from Usuario u where u.email = :email")
+    @Query("select count(u) > 0 from Account u where u.email = :email")
     boolean userExists(String email);
 
 }

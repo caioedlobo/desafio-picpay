@@ -33,7 +33,7 @@ class TransactionServiceTest {
         BigDecimal value = new BigDecimal(5);
         //GIVEN
         BDDMockito.given(accountService.searchAccount(id)).willReturn(account);
-        BDDMockito.given(account.getSaldo()).willReturn(value);
+        BDDMockito.given(account.getBalance()).willReturn(value);
 
         //WHEN + ASSERT
         assertThrows(InsufficientFundsException.class, () -> transactionService.withdraw(id, BigDecimal.valueOf(10)));
@@ -47,7 +47,7 @@ class TransactionServiceTest {
         Long id = 1L;
 
         BDDMockito.given(accountService.searchAccount(id)).willReturn(account);
-        BDDMockito.given(account.getSaldo()).willReturn(value);
+        BDDMockito.given(account.getBalance()).willReturn(value);
 
         //WHEN
         transactionService.withdraw(id, value);
@@ -68,7 +68,7 @@ class TransactionServiceTest {
 
         Account account = new Account();
         account.setType(AccountType.PJ.getValue());
-        account.setSaldo(new BigDecimal(200));
+        account.setBalance(new BigDecimal(200));
 
         BDDMockito.given(accountService.searchAccount(transaction.getPayer())).willReturn(account);
 
@@ -86,7 +86,7 @@ class TransactionServiceTest {
 
         Account account = new Account();
         account.setType(AccountType.PF.getValue());
-        account.setSaldo(new BigDecimal(99));
+        account.setBalance(new BigDecimal(99));
 
         when(accountService.searchAccount(transaction.getPayer())).thenReturn(account);
 

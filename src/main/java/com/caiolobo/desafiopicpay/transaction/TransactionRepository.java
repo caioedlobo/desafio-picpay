@@ -13,12 +13,12 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     @Transactional
     @Modifying
-    @Query("update Usuario u set u.saldo = u.saldo - :value where u.id = :payer")
+    @Query("update Account u set u.balance = u.balance - :value where u.id = :payer")
     void withdraw(Long payer, BigDecimal value);
 
     @Transactional
     @Modifying
-    @Query("update Usuario u set u.saldo = u.saldo + :value where u.id = :payee")
+    @Query("update Account u set u.balance = u.balance + :value where u.id = :payee")
     void deposit(Long payee, BigDecimal value);
 
 }
