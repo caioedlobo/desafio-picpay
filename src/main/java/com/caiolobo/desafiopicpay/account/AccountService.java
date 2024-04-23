@@ -1,7 +1,7 @@
 package com.caiolobo.desafiopicpay.account;
 
 import com.caiolobo.desafiopicpay.exceptions.AccountNotFoundException;
-import com.caiolobo.desafiopicpay.exceptions.UsuarioJaExisteException;
+import com.caiolobo.desafiopicpay.exceptions.AccountAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +15,7 @@ public class AccountService {
 
     public Account createAccount(CreateAccountDTO newAccount){
         if(accountRepository.userExists(newAccount.email())){
-            throw new UsuarioJaExisteException();
+            throw new AccountAlreadyExistsException();
         }
         return accountRepository.save(new Account(newAccount));
     }

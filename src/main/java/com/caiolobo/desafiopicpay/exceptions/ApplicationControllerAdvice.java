@@ -1,6 +1,5 @@
 package com.caiolobo.desafiopicpay.exceptions;
 
-import com.caiolobo.desafiopicpay.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
 
-    @ExceptionHandler({UsuarioJaExisteException.class, AccountNotFoundException.class, ValidateException.class})
+    @ExceptionHandler({AccountAlreadyExistsException.class, AccountNotFoundException.class, ValidateException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrors handleNotFoundException(Exception exception){
         return new ApiErrors(exception.getMessage());
