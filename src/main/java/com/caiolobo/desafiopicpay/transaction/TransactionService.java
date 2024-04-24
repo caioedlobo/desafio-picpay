@@ -32,7 +32,7 @@ public class TransactionService {
 
     @Transactional
     public void transfer(Transaction transaction){
-        validate(transaction);
+        validateTransaction(transaction);
         transactionRepository.save(transaction);
         withdraw(transaction.getPayer(), transaction.getValue());
         deposit(transaction.getPayee(), transaction.getValue());
@@ -53,7 +53,7 @@ public class TransactionService {
         transactionRepository.deposit(user, value);
     }
 
-    private void validate(Transaction transaction){
+    private void validateTransaction(Transaction transaction){
         LOGGER.info("Validating transaction {}", transaction);
         Account payeer = accountService.searchAccount(transaction.getPayer());
         accountService.searchAccount(transaction.getPayee());
