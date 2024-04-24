@@ -3,8 +3,10 @@ package com.caiolobo.desafiopicpay.transaction;
 import com.caiolobo.desafiopicpay.account.Account;
 import com.caiolobo.desafiopicpay.account.AccountService;
 import com.caiolobo.desafiopicpay.account.AccountType;
+import com.caiolobo.desafiopicpay.authorization.AuthorizationService;
 import com.caiolobo.desafiopicpay.exceptions.InsufficientFundsException;
 import com.caiolobo.desafiopicpay.exceptions.ValidateException;
+import com.caiolobo.desafiopicpay.notification.NotificationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
@@ -25,7 +27,36 @@ class TransactionServiceTest {
     @Mock
     private AccountService accountService;
     @Mock
+    private AuthorizationService authorizationService;
+    @Mock
     private Account account;
+    @Mock
+    private NotificationService notificationService;
+
+    @Test
+    void itShouldTransfer(){
+        //GIVEN
+        Transaction transaction = new Transaction();
+        transaction.setPayer(1L);
+        transaction.setPayee(2L);
+        transaction.setValue(new BigDecimal(100));
+
+        Account account = new Account();
+        account.setType(AccountType.PF.getValue());
+        account.setBalance(new BigDecimal(200));
+
+        BDDMockito.given(accountService.searchAccount(transaction.getPayer())).willReturn(account);
+
+        //WHEN
+        transactionService.transfer(transaction);
+
+        //THEN
+        BDDMockito.verify(transactionRepository).save(transaction);
+        BDDMockito.verify(transactionRepository).withdraw(transaction.getPayer(), transaction.getValue());
+        BDDMockito.verify(transactionRepository).deposit(transaction.getPayee(), transaction.getValue());
+        BDDMockito.verify(authorizationService).authorize(transaction);
+        BDDMockito.verify(notificationService).notify(transaction);
+    }
 
     @Test
     void itShouldThrowInsufficientFundsWithdrawing() {
@@ -76,7 +107,7 @@ class TransactionServiceTest {
     }
 
     @Test
-    void itShouldThrowValidateException(){
+    void itShouldThrowValidateTransactionException(){
         //GIVEN
         Transaction transaction = new Transaction();
         transaction.setPayer(1L);
@@ -94,7 +125,7 @@ class TransactionServiceTest {
     }
 
     @Test
-    public void itShouldThrowInsufficientFundsOnValidate() {
+    public void itShouldThrowInsufficientFunds() {
         // GIVEN
         Transaction transaction = new Transaction();
         transaction.setPayer(1L);
