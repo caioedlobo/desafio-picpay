@@ -136,7 +136,7 @@ class TransactionServiceTest {
         account.setType(AccountType.PF.getValue());
         account.setBalance(new BigDecimal(99));
 
-        when(accountService.searchAccount(transaction.getPayer())).thenReturn(account);
+        BDDMockito.given(accountService.searchAccount(transaction.getPayer())).willReturn(account);
 
         // WHEN + THEN
         assertThrows(InsufficientFundsException.class, () -> transactionService.transfer(transaction));
