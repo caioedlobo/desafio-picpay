@@ -24,7 +24,7 @@ public class NotificationConsumer {
     }
 
     @KafkaListener(topics = "transaction-notification", groupId = "picpay-desafio-backend")
-    public boolean receiveNotification(Transaction transaction){
+    public void receiveNotification(Transaction transaction){
         LOGGER.info("notifying transaction {}...", transaction);
         ResponseEntity<Authorization> response = null;
         try {
@@ -37,9 +37,6 @@ public class NotificationConsumer {
         catch(ResourceAccessException exception){
             throw new GenericException("Error while consuming notification API");
         }
-        /*catch(KafkaException exception){
-            throw new AuthorizationException("Notification");
-        }*/
     }
 
     private static void extracted(ResponseEntity<Authorization> response) {
