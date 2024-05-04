@@ -1,6 +1,5 @@
 package com.caiolobo.desafiopicpay.notification;
 
-import com.caiolobo.desafiopicpay.authorization.Authorization;
 import com.caiolobo.desafiopicpay.exceptions.AuthorizationException;
 import com.caiolobo.desafiopicpay.exceptions.GenericException;
 import com.caiolobo.desafiopicpay.transaction.Transaction;
@@ -26,7 +25,7 @@ public class NotificationConsumer {
     @KafkaListener(topics = "transaction-notification", groupId = "picpay-desafio-backend")
     public void receiveNotification(Transaction transaction){
         LOGGER.info("notifying transaction {}...", transaction);
-        ResponseEntity<Notification> response = null;
+        ResponseEntity<Notification> response;
         try {
             response = restClient.get()
                     .retrieve()
