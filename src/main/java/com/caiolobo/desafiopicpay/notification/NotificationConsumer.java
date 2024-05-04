@@ -32,17 +32,13 @@ public class NotificationConsumer {
                     .retrieve()
                     .toEntity(Notification.class);
 
-            extracted(response);
+            if(response.getStatusCode().isError() || !response.getBody().isServiceAvailable()){
+                throw new AuthorizationException("Notification");
+            }
+            LOGGER.info("notification has been sent {}...", response.getBody());
         }
         catch(ResourceAccessException exception){
             throw new GenericException("Error while consuming notification API");
         }
     }
-
-    private static void extracted(ResponseEntity<Notification> response) {
-        if(response.getStatusCode().isError() || response.getBody().isServiceAvailable()){
-            throw new AuthorizationException("Notification");
-        }
-    }
-
 }
