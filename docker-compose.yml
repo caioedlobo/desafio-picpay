@@ -14,11 +14,6 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
 
-  mock-api:
-    image: 'mock-api'
-    ports:
-      - '8081:8080'
-
   postgres:
     image: 'postgres'
     restart: always
