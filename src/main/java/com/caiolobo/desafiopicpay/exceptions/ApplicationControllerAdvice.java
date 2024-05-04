@@ -27,11 +27,11 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(errors);
     }
 
-    /*@ExceptionHandler(AuthorizationException.class)
+    @ExceptionHandler(AuthorizationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiErrors handleAuthorizationException(AuthorizationException exception ){
         return new ApiErrors(exception.getMessage());
-    }*/
+    }
 
     @ExceptionHandler(GenericException.class)
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
