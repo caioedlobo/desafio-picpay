@@ -30,14 +30,14 @@ public class AuthorizationService {
              response = restClient.get()
                     .retrieve()
                     .toEntity(Authorization.class);
-        }
-        catch(ResourceAccessException exception){
-            throw new GenericException("Error while consuming authorization API");
-        }
-        finally {
+
             if(response.getStatusCode().isError() || !response.getBody().isAuthorized()){
                 throw new AuthorizationException("Transaction");
             }
+            LOGGER.info("Transaction authorized...");
+        }
+        catch(ResourceAccessException exception){
+            throw new GenericException("Error while consuming authorization API");
         }
     }
 }
