@@ -19,18 +19,18 @@ public class NotificationConsumer {
 
     public NotificationConsumer(RestClient.Builder builder){
         restClient = builder
-                .baseUrl("http://localhost:8081/api/mock")
+                .baseUrl("https://run.mocky.io/v3/54dc2cf1-3add-45b5-b5a9-6bf7e7f1f4a6")
                 .build();
     }
 
     @KafkaListener(topics = "transaction-notification", groupId = "picpay-desafio-backend")
     public void receiveNotification(Transaction transaction){
         LOGGER.info("notifying transaction {}...", transaction);
-        ResponseEntity<Authorization> response = null;
+        ResponseEntity<Notification> response = null;
         try {
             response = restClient.get()
                     .retrieve()
-                    .toEntity(Authorization.class);
+                    .toEntity(Notification.class);
 
             extracted(response);
         }
@@ -39,8 +39,8 @@ public class NotificationConsumer {
         }
     }
 
-    private static void extracted(ResponseEntity<Authorization> response) {
-        if(response.getStatusCode().isError() || !response.getBody().isSmsAuthorized()){
+    private static void extracted(ResponseEntity<Notification> response) {
+        if(response.getStatusCode().isError() || response.getBody().isServiceAvailable()){
             throw new AuthorizationException("Notification");
         }
     }
