@@ -19,7 +19,7 @@ public class AuthorizationService {
 
     public AuthorizationService(RestClient.Builder builder) {
         this.restClient = builder
-                .baseUrl("http://localhost:8081/api/mock")
+                .baseUrl("https://run.mocky.io/v3/5794d450-d2e2-4412-8131-73d0293ac1cc")
                 .build();
     }
 
@@ -35,7 +35,7 @@ public class AuthorizationService {
             throw new GenericException("Error while consuming authorization API");
         }
         finally {
-            if(response.getStatusCode().isError() || !response.getBody().isNotificationAuthorized()){
+            if(response.getStatusCode().isError() || !response.getBody().isAuthorized()){
                 throw new AuthorizationException("Transaction");
             }
         }
