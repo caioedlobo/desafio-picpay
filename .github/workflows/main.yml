@@ -40,5 +40,8 @@ jobs:
       - name: Pull image from Docker Hub
         run: docker pull caioeduardolobo/desafiopicpay:latest
 
+      - name: Remove existing container
+        run: docker rm -f desafiopicpay || true
+
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name desafiopicpay caioeduardolobo/desafiopicpay
