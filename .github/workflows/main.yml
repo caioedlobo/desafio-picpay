@@ -28,7 +28,7 @@ jobs:
             caioeduardolobo/desafiopicpay:latest
 
   CD:
-    needs: build
+    needs: CI
     runs-on: self-hosted
     steps:
       - name: Pull image from Docker Hub
