@@ -31,6 +31,12 @@ jobs:
     needs: CI
     runs-on: self-hosted
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.3
+
+      - name: Docker Compose Up
+        run: docker-compose up -d
+
       - name: Pull image from Docker Hub
         run: docker pull caioeduardolobo/desafiopicpay:latest
 
